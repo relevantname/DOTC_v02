@@ -6,6 +6,8 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     public float characterSpeed;
+    private Vector3 moveDirection;
+    private float moveAmount;
 
     private Rigidbody characterRigidbody;
     private CapsuleCollider characterCollider;
@@ -27,17 +29,14 @@ public class CharacterController : MonoBehaviour
 
     private void ProcessInputs()
     {
+        moveDirection = new Vector3(inputManager.HorizontalInput, 0, inputManager.VerticalInput).normalized;
+        moveAmount = Mathf.Clamp01(Mathf.Abs(inputManager.HorizontalInput) + Mathf.Abs(inputManager.VerticalInput));
+        
+        characterRigidbody.velocity = moveDirection * characterSpeed;
+
         characterAnimator.SetFloat("Horizontal", inputManager.HorizontalInput);
-        characterRigidbody.AddForce(new Vector3(inputManager.HorizontalInput,0,0).normalized*characterSpeed);
-        characterAnimator.SetFloat("Vertical", inputManager.VericalInput);
-        characterRigidbody.AddForce(new Vector3(0, 0, inputManager.VericalInput).normalized * characterSpeed);
-
-        if (inputManager.HorizontalInput == 0 && inputManager.VericalInput == 0)
-        {
-            characterRigidbody.velocity = Vector3.zero;
-            characterRigidbody.angularVelocity = Vector3.zero;
-        }
-
+        characterAnimator.SetFloat("Vertical", inputManager.VerticalInput);
+        
         if (inputManager.Shoot == true)
             characterAnimator.SetTrigger("Shoot");
 

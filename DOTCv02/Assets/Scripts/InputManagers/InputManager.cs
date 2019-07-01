@@ -14,7 +14,7 @@ public abstract class InputManager : MonoBehaviour
     {
         get { return _horizontalInput; }
     }
-    public float VericalInput
+    public float VerticalInput
     {
         get { return _verticalInput; }
     }
