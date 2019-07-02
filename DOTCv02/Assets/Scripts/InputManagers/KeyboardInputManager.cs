@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class KeyboardInputManager : InputManager
 {
-    private void Update()
+    protected override void Update()
     {
-        _horizontalInput = Input.GetAxisRaw("Horizontal");
-        _verticalInput = Input.GetAxisRaw("Vertical");
+        base.Update();
 
-        _shoot = Input.GetKey(KeyCode.Mouse0);
-        _cast = Input.GetKey(KeyCode.Mouse1);
+        _horizontalInput = Input.GetAxis("Horizontal");
+        _verticalInput = Input.GetAxis("Vertical");
+
+        _shoot = Input.GetKeyDown(KeyCode.Mouse0);
+        _cast = Input.GetKeyDown(KeyCode.Mouse1);
     }
 }

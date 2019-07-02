@@ -28,7 +28,7 @@ public abstract class InputManager : MonoBehaviour
         get { return _cast; }
     }
 
-    protected virtual void FixedUpdate()
+    protected virtual void Update()
     {
         if (_shoot)
             _shoot = false;

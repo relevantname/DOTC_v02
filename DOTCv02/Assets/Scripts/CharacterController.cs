@@ -8,7 +8,7 @@ public class CharacterController : MonoBehaviour
     public float characterSpeed;
     private Vector3 moveDirection;
     private float moveAmount;
-
+    
     private Rigidbody characterRigidbody;
     private CapsuleCollider characterCollider;
     private Animator characterAnimator;
@@ -21,22 +21,25 @@ public class CharacterController : MonoBehaviour
         characterAnimator = GetComponentInChildren<Animator>();
         inputManager = GetComponent<InputManager>();
     }
-
-    private void Update()
+    
+    private void FixedUpdate()
     {
         ProcessInputs();
+        ProcessAnimations();
     }
 
     private void ProcessInputs()
     {
         moveDirection = new Vector3(inputManager.HorizontalInput, 0, inputManager.VerticalInput).normalized;
         moveAmount = Mathf.Clamp01(Mathf.Abs(inputManager.HorizontalInput) + Mathf.Abs(inputManager.VerticalInput));
-        
-        characterRigidbody.velocity = moveDirection * characterSpeed;
+        characterRigidbody.velocity = moveDirection * (characterSpeed*moveAmount);
+    }
 
-        characterAnimator.SetFloat("Horizontal", inputManager.HorizontalInput);
-        characterAnimator.SetFloat("Vertical", inputManager.VerticalInput);
-        
+    private void ProcessAnimations()
+    {
+        characterAnimator.SetFloat("Horizontal", inputManager.HorizontalInput, 0.1f, Time.deltaTime);
+        characterAnimator.SetFloat("Vertical", inputManager.VerticalInput, 0.1f, Time.deltaTime);
+
         if (inputManager.Shoot == true)
             characterAnimator.SetTrigger("Shoot");
 
