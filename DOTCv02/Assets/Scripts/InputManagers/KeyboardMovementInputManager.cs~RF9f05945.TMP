@@ -1,0 +1,25 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class KeyboardMovementInputManager : MonoBehaviour, IInputManager, IMovementInputManager
+{
+    private float _horizontalInput;
+    private float _verticalInput;
+
+    private void Update()
+    {
+        GetInputs();
+    }
+
+    public void GetInputs()
+    {
+        _horizontalInput = Input.GetAxis("Horizontal");
+        _verticalInput = Input.GetAxis("Vertical");
+    }
+
+    public Vector3 GetMovementVector()
+    {
+        return new Vector3(_horizontalInput, 0, _verticalInput);
+    }
+}

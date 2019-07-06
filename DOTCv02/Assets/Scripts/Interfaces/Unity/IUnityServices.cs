@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : MonoBehaviour
+public interface IUnityServices
 {
-    public float characterSpeed = 5.0f;
+    float GetAxisRaw(string axisName);
 }

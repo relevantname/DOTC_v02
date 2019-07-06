@@ -14,7 +14,7 @@ public class MagicBallShootHandler : MonoBehaviour, IHandleShoot
     }
     public void Shoot()
     {
-        GameObject magicBallGO = Instantiate(magicBall, magicBallShootPoint.position, transform.rotation);
-        magicBallGO.GetComponent<IShootableObject>().Initialize(playerData.magicBallDamage, playerData.magicBallSpeed);
+    //    GameObject magicBallGO = Instantiate(magicBall, magicBallShootPoint.position, transform.rotation);
+    //    magicBallGO.GetComponent<IShootableObject>().Initialize(playerData.magicBallDamage, playerData.magicBallSpeed);
     }
 }

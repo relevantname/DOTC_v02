@@ -1,0 +1,19 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class KeyboardMovementInputManager : MonoBehaviour, IInputManager, IMovementInputManager
+{
+    private float _horizontalInput;
+    private float _verticalInput;
+
+    public void GetInputs()
+    {
+        
+    }
+
+    public Vector3 GetMovementVector()
+    {
+        throw new System.NotImplementedException();
+    }
+}

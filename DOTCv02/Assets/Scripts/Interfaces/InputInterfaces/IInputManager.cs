@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : MonoBehaviour
+public interface IInputManager
 {
-    public float characterSpeed = 5.0f;
+    void GetInputs();
 }
