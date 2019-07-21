@@ -8,4 +8,9 @@ public class UnityServices : IUnityServices
     {
         return Input.GetAxisRaw(axisName);
     }
+
+    public bool GetKeyDown(KeyCode keyCode)
+    {
+        return Input.GetKeyDown(keyCode);
+    }
 }

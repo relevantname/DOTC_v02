@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IUnityServices
 {
     float GetAxisRaw(string axisName);
+    bool GetKeyDown(KeyCode keyCode);
 }

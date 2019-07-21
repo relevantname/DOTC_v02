@@ -61,7 +61,7 @@ ModelImporter:
       events:
       - time: 0.507772
         functionName: HandleEvent
-        data: Shoot
+        data: ExecuteAbilityWithAnimationEvent
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

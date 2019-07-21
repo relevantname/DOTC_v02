@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagicBall : MonoBehaviour, IShootableObject
+public class MagicBall : ShootableObject
 {
-    private Rigidbody magicBallRigidbody;
-
-
-    private float damage;
-    private float moveSpeed;
-
-    public void Initialize(float damage, float moveSpeed)
+    public GameObject blowEffect;
+    
+    private void OnCollisionEnter(Collision collision)
     {
+        IDamagable damagable = collision.collider.GetComponent<IDamagable>();
+        damagable?.GetDamage(heal_damageAmount);
+
+        if(blowEffect != null)Instantiate(blowEffect, collision.transform.position, Quaternion.identity);
     }
 }

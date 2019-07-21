@@ -7,10 +7,13 @@ using UnityEngine.TestTools;
 public class InputTests
 {
     [UnityTest]
-    public IEnumerator MoveCharacterAlongHorizontalAxis_Unity()
+    public IEnumerator MoveCharacterAlongHorizontalAxis()
     {
         var player = new GameObject();
-        player.gameObject.AddComponent<PlayerData>().characterSpeed = 5.0f;
+        player.tag = "Player";
+        var defaultData = ScriptableObject.CreateInstance("PlayerDefaultData") as PlayerDefaultData;
+        defaultData.movementSpeed = 5.0f;
+        player.AddComponent<PlayerData>().playerDefaultData = defaultData;
         var movementInputManager = player.AddComponent<KeyboardMovementInputManager>();
         var unityServices = Substitute.For<IUnityServices>();
         unityServices.GetAxisRaw("Horizontal").Returns(1);
@@ -22,6 +25,69 @@ public class InputTests
         Assert.AreEqual(5, player.transform.position.x, 0.1f);
     }
 
+    [UnityTest]
+    public IEnumerator MoveCharacterAlongVerticalAxis()
+    {
+        var player = new GameObject();
+        player.tag = "Player";
+        var defaultData = ScriptableObject.CreateInstance("PlayerDefaultData") as PlayerDefaultData;
+        defaultData.movementSpeed = 5.0f;
+        player.AddComponent<PlayerData>().playerDefaultData = defaultData;
+        var movementInputManager = player.AddComponent<KeyboardMovementInputManager>();
+        var unityServices = Substitute.For<IUnityServices>();
+        unityServices.GetAxisRaw("Vertical").Returns(1);
+        movementInputManager._unityServices = unityServices;
+        player.gameObject.AddComponent<CharacterMovementController>();
+
+        yield return new WaitForSeconds(1f);
+
+        Assert.AreEqual(5, player.transform.position.z, 0.1f);
+    }
+
+    [UnityTest]
+    public IEnumerator ShootMagicBall()
+    {
+        var player = new GameObject();
+        var shootPos = new GameObject("ShootPosition");
+        shootPos.transform.SetParent(player.transform);
+        var eventListener = new GameObject("EventListener", typeof(EventListeners));
+        var actionsInputManager = player.AddComponent<KeyboradActionsInputManager>();
+        var characterAbilityController = player.gameObject.AddComponent<CharacterAbilityController>();
+        var shootMagicBallAbility = new GameObject("ShootMagicBallAbility",
+            typeof(ShootMagicBallAbility));
+        
+        ShootAbility_HealDamageMakerAbilityData shootAbilityData =
+            ScriptableObject.CreateInstance("ShootAbility_HealDamageMakerAbilityData") as ShootAbility_HealDamageMakerAbilityData;
+        shootAbilityData.abilityName = "Shoot Magic Ball";
+        var magicBallPrefab = new GameObject("MagicBall", typeof(MagicBall), typeof(Rigidbody));
+        magicBallPrefab.tag = "MagicBall";
+        shootAbilityData.gameObjectToShoot = magicBallPrefab;
+        shootMagicBallAbility.GetComponent<ShootMagicBallAbility>().abilityData = shootAbilityData;
+
+        characterAbilityController.abilityPrefabs.Add(shootMagicBallAbility);
+
+        var unityServices = Substitute.For<IUnityServices>();
+        unityServices.GetKeyDown(KeyCode.Alpha1).Returns(true);
+        actionsInputManager._unityServices = unityServices;
+        
+        yield return new WaitForSeconds(1f);
+
+        GameObject magicBall = GameObject.FindGameObjectWithTag("MagicBall");
+        Assert.IsNotNull(magicBall);
+    }
+
+    [TearDown]
+    public void RemoveCreatedObjects()
+    {
+        foreach (ShootableObject shootableObject in GameObject.FindObjectsOfType<ShootableObject>())
+            Object.Destroy(shootableObject);
+
+        var playerGO = GameObject.FindGameObjectWithTag("Player");
+        if (playerGO != null) Object.Destroy(playerGO);
+
+        var eventListener = GameObject.FindObjectOfType<EventListeners>();
+        if (eventListener != null) Object.Destroy(eventListener);
+    }
     //[Test]
     //public void MoveCharacterAlongHorizontalAxis()
     //{
