@@ -53,6 +53,7 @@ public class CharacterAbilityController : MonoBehaviour, IAbilityEvents
         currentActiveAbility = abilityToTrigger;
         if (characterAnimator != null && !string.IsNullOrEmpty(currentActiveAbility.abilityData.animationName))
             characterAnimator.SetTrigger(currentActiveAbility.abilityData.animationName);
+
         currentActiveAbility.Activate();
     }
     // This method triggered when an ability is executed.

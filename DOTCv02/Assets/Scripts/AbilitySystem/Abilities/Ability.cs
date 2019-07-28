@@ -8,7 +8,7 @@ public abstract class Ability : MonoBehaviour
     public AbilityData abilityData;
     [HideInInspector] public float remainingCooldownDuration;
     public bool isInCooldown;
-    private float cooldownTimer; 
+    private float cooldownTimer;
 
     private void Update()
     {
@@ -38,6 +38,11 @@ public abstract class Ability : MonoBehaviour
             ExecuteEvents.Execute<IAbilityEvents>(listener, null, (x, y) => x.AbilityExecuted(abilityData.abilityName, abilityData.cooldownDuration));
 
         isInCooldown = true;
-        remainingCooldownDuration = abilityData.cooldownDuration;
+        remainingCooldownDuration = CalculateCooldown();
+    }
+
+    public virtual float CalculateCooldown()
+    {
+        return abilityData.cooldownDuration;
     }
 }

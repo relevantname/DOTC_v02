@@ -613,7 +613,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1488278640}
-  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.94, z: 2.152}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -621,7 +621,7 @@ Transform:
   - {fileID: 394378564}
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1488278642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -686,10 +686,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1488278640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e29acf15e199ea4bbca6fcc522195f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 53edc331e0596df4dbe675f088534a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDefaultData: {fileID: 11400000, guid: a7a2457c573f7a645936d897f4a12eb8, type: 2}
+  playerBaseStats: {fileID: 11400000, guid: 8778bf4e9e6efa84cb3dbb8a7d669eca, type: 2}
+  playerStats: {fileID: 0}
 --- !u!114 &1488278647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -705,7 +706,6 @@ MonoBehaviour:
   abilityPrefabs:
   - {fileID: 8223884756334098019, guid: 89cfda6015525574a99263e282b86c74, type: 3}
   - {fileID: 6097231015542707196, guid: 4400cdb75e66c4a47baf188b6c9af79d, type: 3}
-  - {fileID: 7738024515477636324, guid: 7012884827d70214eb5307ed6fb80573, type: 3}
   currentActiveAbility: {fileID: 0}
 --- !u!114 &1488278648
 MonoBehaviour:

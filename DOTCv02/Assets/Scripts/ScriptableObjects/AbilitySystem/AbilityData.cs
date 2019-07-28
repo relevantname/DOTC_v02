@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "AbilityBaseData", menuName = "Ability Data/AbilityBaseData")]
-public class AbilityData : ScriptableObject, IAbilityData
+public class AbilityData : ScriptableObject
 {
     public string abilityName;
     public float cooldownDuration;

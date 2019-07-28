@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IPlayerDataContainer
+public interface IInitialBuff
 {
-    float GetMovementSpeed();
+    void Execute(PlayerStats stats);
 }

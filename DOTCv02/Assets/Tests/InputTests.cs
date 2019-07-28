@@ -11,9 +11,9 @@ public class InputTests
     {
         var player = new GameObject();
         player.tag = "Player";
-        var defaultData = ScriptableObject.CreateInstance("PlayerDefaultData") as PlayerDefaultData;
+        var defaultData = ScriptableObject.CreateInstance("PlayerData") as PlayerData;
         defaultData.movementSpeed = 5.0f;
-        player.AddComponent<PlayerData>().playerDefaultData = defaultData;
+        player.AddComponent<PlayerStats>().InitializePlayerStats(defaultData);
         var movementInputManager = player.AddComponent<KeyboardMovementInputManager>();
         var unityServices = Substitute.For<IUnityServices>();
         unityServices.GetAxisRaw("Horizontal").Returns(1);
@@ -30,9 +30,9 @@ public class InputTests
     {
         var player = new GameObject();
         player.tag = "Player";
-        var defaultData = ScriptableObject.CreateInstance("PlayerDefaultData") as PlayerDefaultData;
+        var defaultData = ScriptableObject.CreateInstance("PlayerData") as PlayerData;
         defaultData.movementSpeed = 5.0f;
-        player.AddComponent<PlayerData>().playerDefaultData = defaultData;
+        player.AddComponent<PlayerStats>().InitializePlayerStats(defaultData);
         var movementInputManager = player.AddComponent<KeyboardMovementInputManager>();
         var unityServices = Substitute.For<IUnityServices>();
         unityServices.GetAxisRaw("Vertical").Returns(1);
@@ -41,7 +41,7 @@ public class InputTests
 
         yield return new WaitForSeconds(1f);
 
-        Assert.AreEqual(5, player.transform.position.z, 0.1f);
+        Assert.AreEqual(4.5, player.transform.position.z, 0.1f);
     }
 
     [UnityTest]
@@ -50,6 +50,9 @@ public class InputTests
         var player = new GameObject();
         var shootPos = new GameObject("ShootPosition");
         shootPos.transform.SetParent(player.transform);
+        var defaultData = ScriptableObject.CreateInstance("PlayerData") as PlayerData;
+        defaultData.damageIncreasePercentage = 0.0f;
+        player.AddComponent<PlayerStats>().InitializePlayerStats(defaultData);
         var eventListener = new GameObject("EventListener", typeof(EventListeners));
         var actionsInputManager = player.AddComponent<KeyboradActionsInputManager>();
         var characterAbilityController = player.gameObject.AddComponent<CharacterAbilityController>();
@@ -70,7 +73,7 @@ public class InputTests
         unityServices.GetKeyDown(KeyCode.Alpha1).Returns(true);
         actionsInputManager._unityServices = unityServices;
         
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
 
         GameObject magicBall = GameObject.FindGameObjectWithTag("MagicBall");
         Assert.IsNotNull(magicBall);

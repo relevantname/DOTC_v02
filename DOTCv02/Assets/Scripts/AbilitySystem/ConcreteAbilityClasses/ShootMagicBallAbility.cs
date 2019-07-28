@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootMagicBallAbility : Ability
+public class ShootMagicBallAbility : ShootAbility_HealDamageMaker
 {
     public override void Execute()
     {
         base.Execute();
 
         Transform shootPos = this.transform.parent.Find("ShootPosition");
-        ShootAbility_HealDamageMakerAbilityData aData = abilityData as ShootAbility_HealDamageMakerAbilityData;
-        GameObject go = Instantiate(aData.gameObjectToShoot, shootPos.position, shootPos.rotation);
-        go.GetComponent<IShootableObject>().Initialize(aData.heal_damageAmount, aData.shootableObjectSpeed);
+        GameObject go = Instantiate(GetShootableObject(), shootPos.position, shootPos.rotation);
+        go.GetComponent<IShootableObject>().Initialize(GetDamage(), GetShootableObjectSpeed());
+    }
 
-        remainingCooldownDuration = aData.cooldownDuration;
-        isInCooldown = true;
+    public override float GetDamage()
+    {
+        float baseDamage = base.GetDamage();
+        float damageIncreaseAmount = baseDamage * (this.GetComponentInParent<PlayerStats>().playerStats.damageIncreasePercentage / 100);
+        return baseDamage + damageIncreaseAmount;
     }
 }

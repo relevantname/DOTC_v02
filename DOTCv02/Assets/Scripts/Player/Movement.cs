@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Movement : IMovement
 {
-    private float speed;
+    private PlayerStats playerData;
 
-    public Movement(float speed)
+    public Movement(PlayerStats playerData)
     {
-        this.speed = speed;
+        this.playerData = playerData;
     }
 
     public Vector3 GetMovementVector(float horizontal, float vertical)
     {
-        return new Vector3(horizontal*speed, 0, vertical*speed);
+        return new Vector3(horizontal* playerData.playerStats.movementSpeed, 0, vertical* playerData.playerStats.movementSpeed);
     }
 }
